@@ -1,28 +1,55 @@
 import React, { useEffect, useState } from 'react'
-import { assets, dummyMyBookingsData } from '../assets/assets'
+import { assets } from '../assets/assets'
 import Title from '../components/Title';
+import toast from 'react-hot-toast'
+import { useAppContext } from '../context/AppContext'
+import { motion } from 'motion/react'
 
 const Mybookings = () => {
 
+  const { axios, user, currency } = useAppContext();
+
   const [bookings, setBokings] = useState([]);
-  const currency = import.meta.env.VITE_CURRENCY
+
 
   const fetchMyBookings = async () => {
-    setBokings(dummyMyBookingsData);
+    try {
+      const { data } = await axios.get("/api/bookings/user");
+
+      if (data.success) {
+        setBokings(data.bookings);
+        console.log(data.bookings);
+
+        toast.success(data.message || "Data Fetched Successfully");
+      }
+      else {
+        toast.error(data.message || "Failed To Fetched Your Bookings Data");
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Error While Fetching Your Bookings Data");
+    }
   }
 
   useEffect(() => {
-    fetchMyBookings();
-  }, [])
+    user && fetchMyBookings();
+  }, [user])
 
   return (
-    <div className='px-6 md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 text-sm max-w-7xl'>
+    <div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className='px-6 md:px-16 lg:px-24 xl:px-32 2xl:px-48 mt-16 text-sm max-w-7xl'>
 
       <Title title={"My Bookings"} align={"left"} subtitle={"View And Manage Your Bookings"} />
 
       <div>
         {bookings.map((booking, index) => (
-          <div key={booking._id} className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border border-borderColor rounded-lg mt-5 first:mt-12">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{delay:index * 0.1, duration: 0.4 }}
+            key={booking._id} className="grid grid-cols-1 md:grid-cols-4 gap-6 p-6 border border-borderColor rounded-lg mt-5 first:mt-12">
             <div className="md:col-span-1">
               <div className="rounded-md overflow-hidden mb-3">
                 <img
@@ -71,7 +98,7 @@ const Mybookings = () => {
                 <p>Booked On {booking.createdAt.split('T')[0]}</p>
               </div>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
     </div>

@@ -58,7 +58,7 @@ export const createBooking = async (req, res) => {
             })
         }
 
-        const carData = await Car.findById({ car });
+        const carData = await Car.findById(car);
 
         //calculate price based on pickup and return date
         const picked = new Date(pickupDate);
@@ -77,14 +77,14 @@ export const createBooking = async (req, res) => {
         })
         return res.status(200).json({
             success: true,
-            mesagage: "Booking Cancelled Successfully"
+            message: "Booking Created Successfully"
         })
 
     } catch (error) {
-        console.error(error.message);
+        console.error("Create booking error",error.message || "Create Booking error");
         return res.status(500).json({
             success: false,
-            message: error.message
+            message: "CREATE BOOKING ERROR"
         })
     }
 }
@@ -99,10 +99,10 @@ export const getUserBookings = async (req, res) => {
             bookings
         })
     } catch (error) {
-        console.error(error.message);
+        console.error("Get car Bookings Error",error.message || "Car Not Available");
         return res.status(500).json({
             success: false,
-            message: error.message
+            message: error.message || "CAR NOT AVAILABLE"
         })
     }
 }

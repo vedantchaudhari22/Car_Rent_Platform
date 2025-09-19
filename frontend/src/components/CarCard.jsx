@@ -11,7 +11,7 @@ const CarCard = ({ car }) => {
             <div className='relative h-48 overflow-hidden'>
                 <img src={car.image} alt="Car Image" className='w-full h-full object-cover transition-transform duration-500 group-hover:scale-105' />
 
-                {car.isAvaliable && <p className='absolute top-4 left-4 bg-primary/90 text-white text-xs px-2.5 py-1 rounded-full'>Available Now</p>}
+                {car.isAvailable && <p className='absolute top-4 left-4 bg-primary/90 text-white text-xs px-2.5 py-1 rounded-full'>Available Now</p>}
 
                 <div className='absolute bottom-4 right-4 bg-black/800 backdrop-blur-sm text-white px-3 py-2 rounded-lg'>
 
@@ -35,7 +35,7 @@ const CarCard = ({ car }) => {
                     </div>
                     <div className='flex items-center text-sm text-muted-foreground'>
                         <img src={assets.fuel_icon} className='h-4 mr-2' alt="" />
-                        <span>{car.fuel_type} Seats</span>
+                        <span>{car.fuel_type}</span>
                     </div>
                     <div className='flex items-center text-sm text-muted-foreground'>
                         <img src={assets.car_icon} className='h-4 mr-2' alt="" />
