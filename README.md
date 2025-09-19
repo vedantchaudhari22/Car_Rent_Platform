@@ -40,9 +40,7 @@ This platform allows users to browse, rent, and manage cars, while owners can li
 
 ---
 
-## 📸 Screenshots (Optional)
 
-_Add UI previews here once you have them (e.g., Home Page, Car Listings, Dashboard)._
 
 ---
 
